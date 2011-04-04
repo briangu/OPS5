@@ -1,0 +1,59 @@
+> (load "demo/auto.ops")
+;;; Loading source file "demo/auto.ops"
+;;; Warning: File "demo/auto.ops" does not begin with IN-PACKAGE.  Loading into package "OPS"
+Common Lisp OPS5 interpreter, version 14-OCT-92.
+******************
+#P"/afs/andrew.cmu.edu/scs/cs/15-381/ops5/demo/auto.ops"
+> (make ready)
+NIL
+> (run)
+
+
+Automobile Diagnosis 
+
+
+Is this true: key is off [no]  yes
+
+Concluding you must turn the key to start the car 
+*End of diagnosis* 
+
+
+Is this true: key is off [no]  no
+
+Is this true: engine is turning [no]  yes
+
+Concluding problem is in fuel or ignition system 
+
+Is this true: headlights are dim or dead [no]  no
+
+Is this true: fuel gauge shows empty [no]  no
+
+Is this true: carburetor smells like gasoline [no]  yes
+
+Is this true: spark at spark plugs [no]  yes
+
+Concluding engine is flooded: wait 15 minutes 
+*End of diagnosis* 
+
+
+Is this true: key is off [no]  no
+
+Is this true: engine is turning [no]  n
+
+Concluding problem is in starting system 
+
+Is this true: headlights are dim or dead [no]  n
+
+Concluding you have a bad starter 
+*End of diagnosis* 
+
+
+Is this true: key is off [no]  q
+
+end -- explicit halt
+ 18 productions (108 // 200 nodes)
+ 50 firings (101 rhs actions)
+  5 mean working memory size (9 maximum)
+  4 mean conflict set size (8 maximum)
+ 11 mean token memory size (19 maximum)
+NIL

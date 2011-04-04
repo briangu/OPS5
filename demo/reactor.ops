@@ -1,0 +1,318 @@
+;;; Sample OPS5 expanded program
+;;; 
+;;; Author: Michael Mauldin 3/23/84
+;;; 
+;;; References: These rules are based on rules from Nelson, William R.,
+;;; "REACTOR: An Expert System for Diagnosis and Treatment of Nuclear
+;;; Reactor Accidents," Proceedings of AAAI 1982.
+
+(reset-ops)
+
+(strategy lex)
+(watch 0)
+(literalize fact
+    system name value trend status raw-value change)
+
+(literalize task
+    goal subgoal query)
+
+(literalize accident
+    type id)
+
+(literalize trace
+    elt)
+
+(vector-attribute
+    elt)
+
+(p start				; Start the diagnosis
+    (ready)
+    -->
+    (write (crlf) "Enter id number for this run:  ")
+    (bind <id> (accept))
+    (make task ^goal input)
+    (make accident ^id <id>)
+    (make fact ^system containment ^name pressure ^trend unknown)
+    (make fact ^system containment ^name radiation ^value unknown)
+    (make fact ^system feedwater ^name flow ^value unknown)
+    (make fact ^system pcs ^name pressure ^trend unknown)
+    (make fact ^system pcs ^name temperature ^trend unknown)
+    (make fact ^system sg ^name level ^trend unknown)
+    (make fact ^system steam ^name flow ^value unknown)
+    (make fact ^system hpis ^status unknown)
+    (write (crlf)))
+
+;;; Get  numeric values for variables that require a high/steady/low
+;;; determination.   Store in the raw-value slot.
+
+(p get-value
+    (task ^goal input)
+    (fact ^system <system> ^name <name> ^value unknown ^raw-value nil)
+    -->
+    (write "Enter value for" <system> <name> "[1..100]: ")
+    (bind <value> (accept))
+    (modify 2 ^raw-value <value>))
+
+;;; Get old and new values for variables which have a trend
+;;; increasing/decreasing/steady.  Store the difference in the change
+;;; slot.
+
+(p get-trend
+    (task ^goal input)
+    (fact ^system <system> ^name <name> ^trend unknown ^change nil)
+    -->
+    (write "Enter old value for" <system> <name> "[1..100]: ")
+    (bind <old> (accept))
+    (write "Enter new value for" <system> <name> "[1..100]: ")
+    (bind <new> (accept))
+    (modify 2 ^change (compute <new> - <old>)))
+
+;;; get the status for systems
+
+(p get-status
+    (task ^goal input)
+    (fact ^system <system> ^name nil ^status unknown)
+    -->
+    (write "Enter value for" <system> "[on, off]: ")
+    (bind <value> (accept))
+    (modify 2 ^status <value>))
+
+;;; After all variables requiring user input have been set, set the
+;;; goal to classify the inputs in terms of low/high/nominal,
+;;; increasing/decreasing/steady.
+
+(p end-of-input
+    (task ^goal input)
+    -->
+    (modify 1 ^goal classify)
+    (write (crlf) "Starting classification..." (crlf)))
+
+;;; The next three rules set the value slot based on the raw numeric
+;;; value.  Rather than define various nominal values, I have used a
+;;; dimensionless numeric scale where 1-32 are low, 33-66 are nominal,
+;;; and 67-100 are high.
+
+(p classify-low
+    (task ^goal classify)
+    (fact ^system <system> ^name <name> ^raw-value < 33 ^value unknown)
+    -->
+    (modify 2 ^value low)
+    (write "Rule classify-low concludes that" <system> <name>
+           "is low" (crlf)))
+
+(p classify-high
+    (task ^goal classify)
+    (fact ^system <system> ^name <name> ^raw-value > 66 ^value unknown)
+    -->
+    (modify 2 ^value high)
+    (write "Rule classify-high concludes that" <system> <name> 
+           "is high" (crlf)))
+
+(p classify-nominal
+    (task ^goal classify)
+    (fact ^system <system> ^name <name> ^value unknown)
+    -->
+    (modify 2 ^value nominal)
+    (write "Rule classify-nominal concludes that" <system> <name> 
+            "is nominal" (crlf)))
+
+;;; The next three rules classify a trend. If the change from the old
+;;; value to the new one is 3 units or less, the variable is labelled
+;;; 'steady,' otherwise it is marked as either increasing or decreasing.
+(p classify-decreasing
+    (task ^goal classify)
+    (fact ^system <system> ^name <name> ^trend unknown ^change {<change> < -3})
+    -->
+    (modify 2 ^trend decreasing)
+    (write "Rule classify-decreasing concludes that" <system> <name>
+           "is decreasing" (crlf)))
+
+(p classify-increasing
+    (task ^goal classify)
+    (fact ^system <system> ^name <name> ^trend unknown ^change {<change> > 3})
+    -->
+    (modify 2 ^trend increasing)
+    (write "Rule classify-increasing concludes that" <system> <name>
+           "is increasing" (crlf)))
+
+(p classify-steady
+    (task ^goal classify)
+    (fact ^system <system> ^name <name> ^trend unknown)
+    -->
+    (modify 2 ^trend steady)
+    (write "Rule classify-steady concludes that" <system> <name>
+           "is steady" (crlf)))
+
+;;; After all variables have been classified, start the diagnosis
+
+(p start-diagnosis
+    (task ^goal classify)
+    -->
+    (modify 1 ^goal diagnose)
+    (write (crlf) "Starting diagnosis..." (crlf)))
+
+(p rule-1				; PCS Integrity challenged?
+    (task ^goal diagnose)
+    (fact ^system pcs ^name pressure ^trend decreasing)
+    (fact ^system hpis ^status on)
+    -->
+    (make fact ^system pcs ^name integrity ^status challenged)
+    (write "Rule 1 concludes:    "  pcs integrity challenged (crlf))
+    (make trace rule-1 used pcs pressure decreasing)
+    (make trace rule-1 used hpis on))
+
+(p rule-2				; Heat transfer inadequate?
+    (task ^goal diagnose)
+    (fact ^system pcs ^name temperature ^trend increasing)
+    -->
+    (make fact ^system pcs ^name heat-transfer ^status inadequate)
+    (write "Rule 2 concludes:    "  pcs heat-transfer inadequate (crlf))
+    (make trace rule-2 used pcs temperature increasing))
+
+(p rule-3				; SG inventory inadequate?
+    (task ^goal diagnose)
+    (fact ^system sg ^name level ^trend decreasing)
+    -->
+    (make fact ^system sg ^name inventory ^status inadequate)
+    (write "Rule 3 concludes:    "  sg inventory inadequate (crlf))
+    (make trace rule-3 used sg level decreasing))
+
+(p rule-4				; Containment integrity challenged?
+    (task ^goal diagnose)
+    (fact ^system containment ^name radiation ^value high)
+    (fact ^system containment ^name pressure ^value high)
+    -->
+    (make fact ^system containment ^name integrity ^status challenged)
+    (write "Rule 4 concludes:    "  containment integrity challenged (crlf))
+    (make trace rule-4 used containment radiation high)
+    (make trace rule-4 used containment pressure high))
+
+(p rule-5				; Loss of feedwater?
+    (task ^goal diagnose)
+    (accident ^id <id>)
+    (fact ^system pcs ^name heat-transfer ^status inadequate)
+    (fact ^system feedwater ^name flow ^value low)
+    -->
+    (modify 2 ^type loss-of-feedwater)
+    (write "Rule 5 concludes accident is loss of feedwater" (crlf))
+    (modify 1 ^goal explain)
+    (make trace rule-5 used pcs heat-transfer inadequate)
+    (make trace rule-5 used feedwater flow low))
+
+(p rule-6				; Loss of feedwater?
+    (task ^goal diagnose)
+    (accident ^id <id>)
+    (fact ^system sg ^name inventory ^status inadequate)
+    (fact ^system feedwater ^name flow ^value low)
+    -->
+    (modify 2 ^type loss-of-feedwater)
+    (write "Rule 6 concludes accident is loss of feedwater" (crlf))
+    (modify 1 ^goal explain)
+    (make trace rule-6 used sg inventory inadequate)
+    (make trace rule-6 used feedwater flow low))
+
+(p rule-7				; Loss of coolant?
+    (task ^goal diagnose)
+    (accident ^id <id>)
+    (fact ^system pcs ^name integrity ^status challenged)
+    (fact ^system containment ^name integrity ^status challenged)
+    -->
+    (modify 2 ^type loca)
+    (write "Rule 7 concludes accident is loss of coolant" (crlf))
+    (modify 1 ^goal explain)
+    (make trace rule-7 used pcs integrity challenged)
+    (make trace rule-7 used containment integrity challenged))
+
+(p rule-8				; SG tube rupture?
+    (task ^goal diagnose)
+    (accident ^id <id>)
+    (fact ^system pcs ^name integrity ^status challenged)
+    (fact ^system sg ^name level ^trend increasing)
+    -->
+    (modify 2 ^type sg-tube-rupture)
+    (write "Rule 8 concludes accident is steam generator tube rupture" (crlf))
+    (modify 1 ^goal explain)
+    (make trace rule-8 used pcs integrity challenged)
+    (make trace rule-8 used sg level increasing))
+
+(p rule-9				; Steam line break?
+    (task ^goal diagnose)
+    (accident ^id <id>)
+    (fact ^system sg ^name inventory ^status inadequate)
+    (fact ^system steam ^name flow ^value high)
+    -->
+    (modify 2 ^type steam-line-break)
+    (write "Rule 9 concludes accident is steam line break" (crlf))
+    (modify 1 ^goal explain)
+    (make trace rule-9 used sg inventory inadequate)
+    (make trace rule-9 used steam flow high))
+
+(p no-diagnosis
+    (task ^goal diagnose)
+    -->
+    (write "No diagnosis" (crlf))
+    (modify 1 ^goal explain))
+
+;;; Explanation:  Get a single word from the user, and then reply to
+;;; those words we recognize.  Currently we recognize the following
+;;; questions:
+;;; 
+;;; facts:	prints the facts used during diagnosis
+;;; high:	prints variables which are high
+;;; low:	prints variables which are low
+;;; nominal:	prints variables which are nominal
+;;; increasing:	prints variables which are increasing
+;;; decreasing:	prints variables which are decreasing
+;;; steady:	prints variables which are steady
+
+(p start-questions
+    (task ^goal explain ^subgoal nil)
+    -->
+    (modify 1 ^subgoal prompt)
+    (write (crlf) Starting explanations (crlf))
+)
+
+(p get-user-query
+    (task ^goal explain ^subgoal prompt)
+    -->
+    (write "Explanations [facts, high/low, none]: ")
+    (modify 1 ^subgoal reply ^query (acceptline none)))
+
+;;; Print a line for each trace element
+
+(p explain-facts
+    (task ^goal explain ^subgoal reply ^query facts)
+    (trace)
+    -->
+    (write "    Fact used: " (substr 2 2 inf) (crlf)))
+
+;;; Print system values
+
+(p explain-value
+    (task ^goal explain ^subgoal reply ^query {<type> <> nil})
+    (fact ^system <system> ^name <name> ^raw-value <value> ^value = <type>)
+    -->
+    (write "   " <type> ":" <system> <name> <value> (crlf)))
+
+;;; Print trends
+
+(p explain-trends
+    (task ^goal explain ^subgoal reply ^query {<type> <> nil})
+    (fact ^system <system> ^name <name> ^change <change> ^trend = <type>)
+    -->
+    (write "   " <type> ":" <system> <name> changed <change> (crlf)))
+
+;;; Having answered the query, set up to ask for another
+
+(p finish-this-query
+    (task ^goal explain ^subgoal reply ^query <> none)
+    -->
+    (modify 1 ^subgoal prompt))
+
+;;; No more queries, mark the task finished
+
+(p quit
+    (task ^goal explain ^subgoal reply ^query none)
+    -->
+    (modify 1 ^goal finished))
+

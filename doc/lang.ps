@@ -1,0 +1,675 @@
+%!PS-Adobe-2.0
+%%Title: lang.mss
+%%DocumentFonts: (atend)
+%%Creator: Michael Mauldin and Scribe 7(1700)
+%%CreationDate: 15 October 1992 02:31
+%%Pages: (atend)
+%%EndComments
+% PostScript Prelude for Scribe.
+/BS {/SV save def 0.0 792.0 translate .01 -.01 scale} bind def
+/ES {showpage SV restore} bind def
+/SC {setrgbcolor} bind def
+/FMTX matrix def
+/RDF {WFT SLT 0.0 eq 
+  {SSZ 0.0 0.0 SSZ neg 0.0 0.0 FMTX astore}
+  {SSZ 0.0 SLT neg sin SLT cos div SSZ mul SSZ neg 0.0 0.0 FMTX astore}
+  ifelse makefont setfont} bind def
+/SLT 0.0 def
+/SI { /SLT exch cvr def RDF} bind def
+/WFT /Courier findfont def
+/SF { /WFT exch findfont def RDF} bind def
+/SSZ 1000.0 def
+/SS { /SSZ exch 100.0 mul def RDF} bind def
+/AF { /WFT exch findfont def /SSZ exch 100.0 mul def RDF} bind def
+/MT /moveto load def
+/XM {currentpoint exch pop moveto} bind def
+/UL {gsave newpath moveto dup 2.0 div 0.0 exch rmoveto
+   setlinewidth 0.0 rlineto stroke grestore} bind def
+/LH {gsave newpath moveto setlinewidth
+   0.0 rlineto
+   gsave stroke grestore} bind def
+/LV {gsave newpath moveto setlinewidth
+   0.0 exch rlineto
+   gsave stroke grestore} bind def
+/BX {gsave newpath moveto setlinewidth
+   exch
+   dup 0.0 rlineto
+   exch 0.0 exch neg rlineto
+   neg 0.0 rlineto
+   closepath
+   gsave stroke grestore} bind def
+/BX1 {grestore} bind def
+/BX2 {setlinewidth 1 setgray stroke grestore} bind def
+/PB {/PV save def newpath translate
+    100.0 -100.0 scale pop /showpage {} def} bind def
+/PE {PV restore} bind def
+/GB {/PV save def newpath translate rotate
+    div dup scale 100.0 -100.0 scale /showpage {} def} bind def
+/GE {PV restore} bind def
+/FB {dict dup /FontMapDict exch def begin} bind def
+/FM {cvn exch cvn exch def} bind def
+/FE {end /original-findfont /findfont load def  /findfont
+   {dup FontMapDict exch known{FontMapDict exch get} if
+   original-findfont} def} bind def
+/BC {gsave moveto dup 0 exch rlineto exch 0 rlineto neg 0 exch rlineto closepath clip} bind def
+/EC /grestore load def
+/SH /show load def
+/MX {exch show 0.0 rmoveto} bind def
+/W {0 32 4 -1 roll widthshow} bind def
+/WX {0 32 5 -1 roll widthshow 0.0 rmoveto} bind def
+/RC {100.0 -100.0 scale
+612.0 0.0 translate
+-90.0 rotate
+.01 -.01 scale} bind def
+/URC {100.0 -100.0 scale
+90.0 rotate
+-612.0 0.0 translate
+.01 -.01 scale} bind def
+/RCC {100.0 -100.0 scale
+0.0 -792.0 translate 90.0 rotate
+.01 -.01 scale} bind def
+/URCC {100.0 -100.0 scale
+-90.0 rotate 0.0 792.0 translate
+.01 -.01 scale} bind def
+%%EndProlog
+%%Page: 0 1
+BS
+0 SI
+13 /Helvetica-Bold AF
+21645 8148 MT
+(OPS5 Language Introduction)SH
+25580 11510 MT
+(Michael Mauldin)SH
+26301 13191 MT
+(October, 1992)SH
+10 /Helvetica AF
+8312 15724 MT
+(This document contains a sketchy)
+146 W( description of OPS5 language features, syntax and semantics of)145 W
+7200 17150 MT
+(conditions and actions.  For more information, consult the OPS5 manual.)SH
+12 /Helvetica-Bold AF
+7200 20905 MT
+(1 Production Memory)SH
+10 /Helvetica AF
+8312 22331 MT
+(create rules with)SH
+/Helvetica-Bold SF
+15870 XM
+(p)SH
+/Helvetica SF
+16759 XM
+(\050production\051 or)SH
+/Helvetica-Bold SF
+23539 XM
+(build)SH
+/Helvetica SF
+26206 XM
+(\050later\051)SH
+8312 24898 MT
+(an OPS5 production-rule definition is a list containing)SH
+/Symbol SF
+9242 26370 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(a function call to)SH
+/Helvetica-Bold SF
+17484 XM
+(p)SH
+/Symbol SF
+9242 28185 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(LHS = one or more condition elements \050first not negated\051, each in Lisp list format.)SH
+/Symbol SF
+9242 30000 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(a separator =)SH
+/Courier SF
+16178 XM
+(-->)SH
+/Symbol SF
+9242 31815 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(RHS = one or more actions, each in Lisp list format.)SH
+12 /Helvetica-Bold AF
+7200 35570 MT
+(2 Sample Rule)SH
+10 /Courier-Bold AF
+7200 37832 MT
+(;; IF)
+SH( the)
+1800 W( key is on AND the engine is not turning)SH
+7200 38963 MT
+(;; THEN  conclude that the problem is in the starting system)SH
+7200 40094 MT
+(\050p bad-starting-system)SH
+9600 41225 MT
+(\050task ^goal diagnose\051)SH
+9600 42356 MT
+(\050fact ^name |key is off| ^value no\051)SH
+9600 43487 MT
+(\050fact ^name |engine is turning| ^value no\051)SH
+9600 44618 MT
+(-->)SH
+9600 45749 MT
+(\050bind <x> |problem is in starting system|\051)SH
+9600 46880 MT
+(\050make fact ^name <x> ^value yes\051)SH
+9600 48011 MT
+(\050write \050crlf\051 Concluding <x> \050crlf\051\051\051)SH
+12 /Helvetica-Bold AF
+7200 51766 MT
+(3 Left-Hand Side)SH
+10 /Helvetica AF
+8312 53192 MT
+(LHS is collection of patterns to be)
+244 W( matched against working memory.  Each pattern contains an)245 W
+7200 54618 MT
+(element-class name followed by some number of LHS terms.  Each term consists)
+592 W( of an)591 W
+/Courier SF
+7200 56044 MT
+(^attribute-name)SH
+/Helvetica SF
+16478 XM
+(followed by a LHS-value.  The LHS-value can be a)SH
+7200 57916 MT
+(constant)SH
+16096 XM
+(in pattern)236 W
+/Courier SF
+21015 XM
+(^on couch)236 W
+/Helvetica SF
+(, ``couch'' is a constant; in pattern)236 W
+/Courier SF
+43310 XM
+(^GRE 100)236 W
+/Helvetica SF
+(, ``100'' is a)236 W
+16096 59059 MT
+(constant;)SH
+7200 60685 MT
+(variable)SH
+16096 XM
+(in pattern,)71 W
+/Courier SF
+20963 XM
+(^Status <n1>)70 W
+/Helvetica SF
+(, ``<n1>'' is variable that will be bound during matching to)70 W
+16096 61828 MT
+(an actual value for some element in working memory;)SH
+7200 63454 MT
+(predicate operator)SH
+16096 XM
+(one of seven operators may precede a constant or variable:  =, <>, <=>, <, <=, >=,)
+19 W( >;)20 W
+16096 64597 MT
+(the = is assumed if no operator is present;)SH
+7200 66223 MT
+(disjunction)SH
+16096 XM
+(in the pattern)6 W
+/Courier SF
+22229 XM
+(^weight << light medium)
+6 W( >>)5 W
+/Helvetica SF
+(, ``<< light medium >>'' specifies that)5 W
+16096 67366 MT
+(only one of the)
+25 W( set of values, light and medium, must match; any LHS-values may be)26 W
+16096 68509 MT
+(contained in the disjunction;)378 W
+/Helvetica-Oblique SF
+30226 XM
+(warning)SH
+/Helvetica SF
+34383 XM
+(leave spaces between values and angle)377 W
+16096 69652 MT
+(brackets to avoid confusing them with variable brackets;)SH
+7200 71278 MT
+(conjunction)SH
+16096 XM
+(in pattern)160 W
+/Courier SF
+20863 XM
+(^GRE { > 600 < 800 })161 W
+/Helvetica SF
+(, ``{ > 600 < 800 }'' specifies a set of value)161 W
+ES
+%%Page: 1 2
+BS
+0 SI
+10 /Helvetica-Bold AF
+30322 4329 MT
+(1)SH
+/Helvetica SF
+16096 7929 MT
+(restrictions all of which)
+325 W( must match; any LHS-values may be contained in the)324 W
+16096 9072 MT
+(conjunction;)SH
+8312 11639 MT
+(Restrictions to predicate operators:)SH
+/Symbol SF
+9242 13111 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(<, <=, >= and > used)
+66 W( only with numbers and with variables bound to numbers.  <=> means)67 W
+9980 14254 MT
+(same type, and <> means not equal.)SH
+/Symbol SF
+9242 16069 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(first occurrence of a variable cannot be preceded by any)
+292 W( predicate other than = \050first)291 W
+9980 17212 MT
+(occurrence establishes binding\051)SH
+8312 19779 MT
+(A condition pattern in LHS \050other than first\051 may be negated by putting a ``-'' in front of)
+152 W( the normal)153 W
+7200 21205 MT
+(pattern)SH
+8312 23772 MT
+(Ordering of condition)
+136 W( elements is significant in variable binding, for conflict resolution and for match)135 W
+7200 25198 MT
+(efficiency)SH
+12 /Helvetica-Bold AF
+7200 28953 MT
+(4 RHS of OPS5 Rules)SH
+10 /Symbol AF
+9242 30425 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(The RHS of the OPS5 rule consists of an ordered sequence of actions.)SH
+/Symbol SF
+9242 32240 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(The primitive actions that affect working memory are)SH
+/Helvetica-Bold SF
+33432 XM
+(make)SH
+/Helvetica SF
+(,)SH
+/Helvetica-Bold SF
+36545 XM
+(modify)SH
+/Helvetica SF
+(, and)SH
+/Helvetica-Bold SF
+42325 XM
+(remove)SH
+/Helvetica SF
+(.)SH
+/Symbol SF
+9242 34055 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(The)SH
+/Helvetica-Bold SF
+11981 XM
+(write)SH
+/Helvetica SF
+14593 XM
+(action is used to output information.)SH
+/Symbol SF
+9242 35870 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(The)SH
+/Helvetica-Bold SF
+11981 XM
+(halt)SH
+/Helvetica SF
+14037 XM
+(action provides a way of explicitly stopping the firing of production rules.)SH
+/Symbol SF
+9242 37685 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(RHS can also contain functions that return values within the actions.)
+218 W( For)
+716 W( example, the)219 W
+/Helvetica-Bold SF
+9980 38828 MT
+(compute)SH
+/Helvetica SF
+14542 XM
+(function allows OPS5 to do arithmetic.  It provides for infix)
+117 W( evaluation of +,-,*, //,)116 W
+9980 39971 MT
+(and \134\134 \050respectively addition,)
+105 W( subtraction, multiplication, division, and modulus\051.  Operations)106 W
+9980 41114 MT
+(are performed from right to left.)SH
+/Symbol SF
+9242 42929 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(These and other actions and functions will be demonstrated by example.)SH
+12 /Helvetica-Bold AF
+7200 46684 MT
+(5 Specific Commands)SH
+10 SS 
+25128 48367 MT
+(The WATCH Command)SH
+/Helvetica SF
+7200 50239 MT
+(no argument)SH
+16096 XM
+(Print current watch level \050initialized to 1\051 unchanged)SH
+/Courier SF
+7200 51865 MT
+(\050watch 0\051)SH
+/Helvetica SF
+16096 XM
+(No report of firings or changes to working memory)SH
+/Courier SF
+7200 53491 MT
+(\050watch 1\051)SH
+/Helvetica SF
+16096 XM
+(Report rule name and time tags of each working memory element)
+417 W( for each)416 W
+16096 54634 MT
+(instantiation fired)SH
+/Courier SF
+7200 56260 MT
+(\050watch 2\051)SH
+/Helvetica SF
+16096 XM
+(In addition to level 1 reports, give each change \050add or delete\051 to working memory)SH
+/Helvetica-Bold SF
+25905 58132 MT
+(The RUN Command)SH
+/Courier SF
+7200 60004 MT
+(\050run\051)SH
+/Helvetica SF
+16096 XM
+(run until a break or halt or no rules in conflict set)SH
+/Courier SF
+7200 61630 MT
+(\050run N\051)SH
+/Helvetica SF
+16096 XM
+(run N steps unless early stop as above)SH
+/Courier SF
+7200 63256 MT
+(\050run 1\051)SH
+/Helvetica SF
+16096 XM
+(for single stepping)SH
+/Helvetica-Bold SF
+22933 65128 MT
+([The WM and PPWM Commands)SH
+8312 67695 MT
+(\050wm\051)SH
+/Helvetica SF
+10991 XM
+(-- list the contents of working memory, optional arguments specify time tags; if no time tags are)69 W
+7200 69121 MT
+(given, shows all elements.)SH
+/Courier SF
+8312 71688 MT
+(\050ppwm <pat>\051)149 W
+/Helvetica SF
+16088 XM
+(-- <pat> is pattern \050in LHS condition form\051, prints all wme's that)
+149 W( match <pat>.  No)148 W
+ES
+%%Page: 2 3
+BS
+0 SI
+10 /Helvetica-Bold AF
+30322 4329 MT
+(2)SH
+/Helvetica SF
+7200 7929 MT
+(variables, predicates or special characters are allowed in in)
+150 W( <pat>.  If pattern is null, all elements are)151 W
+7200 9355 MT
+(printed.)SH
+8312 11922 MT
+(use with)SH
+/Helvetica-Bold SF
+12258 XM
+(cs)SH
+/Helvetica SF
+13648 XM
+(and)SH
+/Helvetica-Bold SF
+15594 XM
+(matches)SH
+/Helvetica SF
+19929 XM
+(to determine why a rule failed to be instantiated at the right time.)SH
+/Helvetica-Bold SF
+26238 13605 MT
+(The PM Command)SH
+/Courier SF
+8312 16172 MT
+(\050pm <args>\051)SH
+/Helvetica SF
+15190 XM
+(-- <args> any number of rule names)SH
+/Helvetica-Bold SF
+26294 17855 MT
+(The CS Command)SH
+/Courier SF
+8312 20422 MT
+(\050cs\051)SH
+/Helvetica SF
+11268 XM
+(-- lists each instantiated rule in)
+278 W( conflict set, one to a line, followed by currently dominant)277 W
+7200 21848 MT
+(instantiation \050that is, the one to be fired on next cycle\051)SH
+/Helvetica-Bold SF
+24516 23531 MT
+(The MATCHES Command)SH
+/Courier SF
+8312 26098 MT
+(\050matches <rules>\051)208 W
+/Helvetica SF
+19206 XM
+(-- prints partial matches)
+208 W( for rules whose names are arguments.  For each)209 W
+7200 27524 MT
+(condition element of specified rules, time tags of matching wme's are listed, as well as intersections)
+108 W( of)107 W
+7200 28950 MT
+(partial matches.)SH
+/Courier-Bold SF
+12000 31212 MT
+(\050literalize number value\051)SH
+12000 33474 MT
+(\050p example-rule)SH
+13800 34605 MT
+(\050number ^value { <number-1> > 100 } \051)SH
+13800 35736 MT
+(\050number ^value { <number-2> <> <number-1> } \051)SH
+13800 36867 MT
+(\050number ^value { <number-3> < 50 } \051)SH
+13800 37998 MT
+(-->)SH
+13800 39129 MT
+(\050write \050crlf\051 <number-1> <number-2> <number-3> \051 \051)SH
+12000 41391 MT
+(\050make number ^value 101\051  ; given time-tag 1)SH
+12000 43653 MT
+(\050make number ^value 102\051  ; given time-tag 2)SH
+12000 45915 MT
+(\050make number ^value  11\051  ; given time-tag 3)SH
+12000 47720 MT
+(=>\050matches example-rule\051)SH
+12000 49982 MT
+(example-rule)SH
+12600 51113 MT
+(** matches for \0501\051 **)SH
+12600 52244 MT
+(2)SH
+12600 53375 MT
+(1)SH
+12600 54506 MT
+(** matches for \0502\051 **)SH
+12600 55637 MT
+(3)SH
+12600 56768 MT
+(2)SH
+12600 57899 MT
+(1)SH
+12600 59030 MT
+(** matches for \0502 1\051 **)SH
+12600 60161 MT
+(3 1)600 W
+12600 61292 MT
+(3 2)600 W
+12600 62423 MT
+(1 2)600 W
+12600 63554 MT
+(2 1)600 W
+12600 64685 MT
+(** matches for \0503\051)SH
+12600 65816 MT
+(3)SH
+12000 66947 MT
+(nil)SH
+/Helvetica SF
+7200 68807 MT
+(The final intersection, which in this example would be)SH
+/Courier SF
+31043 XM
+(matches for \0503 2 1\051)SH
+/Helvetica SF
+(, is not included.)SH
+8312 71374 MT
+(Uses:)SH
+ES
+%%Page: 3 4
+BS
+0 SI
+10 /Helvetica-Bold AF
+30322 4329 MT
+(3)SH
+/Symbol SF
+9242 8000 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(a given condition element is never matched,)SH
+/Symbol SF
+9242 9815 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(the intersection of two or more condition elements, each of)
+170 W( which is matched, fails to be)171 W
+9980 10958 MT
+(satisfied, or)SH
+/Symbol SF
+9242 12773 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(a negated condition element is matched.)SH
+/Helvetica-Bold SF
+24877 14456 MT
+(The PBREAK Command)SH
+/Symbol SF
+9242 16210 MT
+(\267)SH
+/Courier SF
+9980 XM
+(\050pbreak <rules>\051)SH
+/Helvetica SF
+19858 XM
+(-- toggles break/nobreak status of rules)SH
+/Symbol SF
+9242 18025 MT
+(\267)SH
+/Courier SF
+9980 XM
+(\050pbreak\051)SH
+/Helvetica SF
+15058 XM
+(-- says which rules are broken)SH
+/Symbol SF
+9242 19840 MT
+(\267)SH
+/Helvetica SF
+9980 XM
+(breaks after rule fires)SH
+/Helvetica-Bold SF
+25544 21523 MT
+(The BACK Command)SH
+/Symbol SF
+9242 23277 MT
+(\267)SH
+/Courier SF
+9980 XM
+(\050back <n>\051)200 W
+/Helvetica SF
+16658 XM
+(undoes the effects of up to 32 rule firings, provided there are no external)200 W
+9980 24420 MT
+(references \050user-defined functions\051 in any RHS)SH
+/Helvetica-Bold SF
+21904 26103 MT
+(The MAKE and REMOVE Commands)SH
+/Symbol SF
+9242 27857 MT
+(\267)SH
+/Courier SF
+9980 XM
+(\050remove *\051)SH
+/Helvetica SF
+16258 XM
+(deletes everything from working memory.)SH
+/Symbol SF
+9242 29672 MT
+(\267)SH
+/Courier SF
+9980 XM
+(\050remove <args>\051)SH
+/Helvetica SF
+19258 XM
+(deletes working memory elements with time tags in <args>)SH
+/Helvetica-Bold SF
+25154 31355 MT
+(The EXCISE Command)SH
+/Courier SF
+8312 33922 MT
+(\050excise <rules>\051)11 W
+/Helvetica SF
+18212 XM
+(-- prevents rules)
+11 W( from firing \050still in network\051, reload to recall, but won't be current)12 W
+7200 35348 MT
+(on wm.)SH
+ES
+%%Trailer
+%%Pages: 4
+%%DocumentFonts: Helvetica Helvetica-Bold Symbol Courier Courier-Bold Helvetica-Oblique

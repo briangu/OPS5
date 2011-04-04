@@ -1,0 +1,65 @@
+> (load "demo/reactor.ops")
+;;; Loading source file "demo/reactor.ops"
+;;; Warning: File "demo/reactor.ops" does not begin with IN-PACKAGE.  Loading into package "OPS"
+Common Lisp OPS5 interpreter, version 14-OCT-92.
+*****************************
+#P"/afs/andrew.cmu.edu/scs/cs/15-381/ops5/demo/reactor.ops"
+> (make ready)
+NIL
+> (run)
+
+Enter id number for this run:   12
+
+Enter value for HPIS [on, off]:  on
+Enter value for STEAM FLOW [1..100]:  52
+Enter old value for SG LEVEL [1..100]:  46
+Enter new value for SG LEVEL [1..100]:  32
+Enter old value for PCS TEMPERATURE [1..100]:  57
+Enter new value for PCS TEMPERATURE [1..100]:  59
+Enter old value for PCS PRESSURE [1..100]:  45
+Enter new value for PCS PRESSURE [1..100]:  67
+Enter value for FEEDWATER FLOW [1..100]:  11
+Enter value for CONTAINMENT RADIATION [1..100]:  52
+Enter old value for CONTAINMENT PRESSURE [1..100]:  56
+Enter new value for CONTAINMENT PRESSURE [1..100]:  67
+
+Starting classification... 
+Rule classify-increasing concludes that CONTAINMENT PRESSURE is increasing 
+Rule classify-nominal concludes that CONTAINMENT RADIATION is nominal 
+Rule classify-low concludes that FEEDWATER FLOW is low 
+Rule classify-increasing concludes that PCS PRESSURE is increasing 
+Rule classify-steady concludes that PCS TEMPERATURE is steady 
+Rule classify-decreasing concludes that SG LEVEL is decreasing 
+Rule classify-nominal concludes that STEAM FLOW is nominal 
+
+Starting diagnosis... 
+Rule 3 concludes:     SG INVENTORY INADEQUATE 
+Rule 6 concludes accident is loss of feedwater 
+
+STARTING EXPLANATIONS 
+Explanations [facts, high/low, none]:  facts
+    Fact used:  RULE-6 USED FEEDWATER FLOW LOW 
+    Fact used:  RULE-6 USED SG INVENTORY INADEQUATE 
+    Fact used:  RULE-3 USED SG LEVEL DECREASING 
+Explanations [facts, high/low, none]:  high
+Explanations [facts, high/low, none]:  low
+    LOW : FEEDWATER FLOW 11 
+Explanations [facts, high/low, none]:  steady
+    STEADY : PCS TEMPERATURE CHANGED 2 
+Explanations [facts, high/low, none]:  nominal
+    NOMINAL : STEAM FLOW 52 
+    NOMINAL : CONTAINMENT RADIATION 52 
+Explanations [facts, high/low, none]:  decreasing
+    DECREASING : SG LEVEL CHANGED -14 
+Explanations [facts, high/low, none]:  increasing
+    INCREASING : PCS PRESSURE CHANGED 22 
+    INCREASING : CONTAINMENT PRESSURE CHANGED 11 
+Explanations [facts, high/low, none]:  none
+
+end -- no production true
+ 29 productions (150 // 293 nodes)
+ 47 firings (87 rhs actions)
+ 13 mean working memory size (15 maximum)
+  3 mean conflict set size (12 maximum)
+ 18 mean token memory size (25 maximum)
+NIL

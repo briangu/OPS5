@@ -1,0 +1,176 @@
+;;; Sample OPS5 program: Automobile diagnosis
+;;; Provided by Michael Mauldin, mlm@cs.cmu.edu.
+
+(reset-ops)
+
+(watch 0)
+(strategy lex)
+
+(literalize task
+	goal)			; Task name
+
+(literalize fact
+	name			; Question to ask user [Y/N]
+	value)			; Answer to question
+
+(p start
+    (ready)
+    -->
+    (Remove 1)
+    (make task ^goal start)
+    (write (crlf) (crlf) "Automobile Diagnosis" (crlf) (crlf)))
+
+(p initialize
+    (task ^goal start)
+    -->
+    (modify 1 ^goal diagnose)
+    (make fact ^name |spark at spark plugs|)
+    (make fact ^name |carburetor smells like gasoline|)
+    (make fact ^name |fuel gauge shows empty|)
+    (make fact ^name |headlights are dim or dead|)
+    (make fact ^name |engine is turning|)
+    (make fact ^name |key is off|))
+
+;;; ask-user: Ask the user about a fact
+
+(p ask-user
+    (task ^goal diagnose)
+    (fact ^name <name> ^value nil)
+    -->
+    (write (crlf) "Is this true:" <name> "[no] ")
+    (bind <input> (acceptline no))
+    (modify 2 ^value <input>))
+
+;;; make-yes-answer: Force a yes answer to be 'yes'
+
+(p make-yes-answer
+    (task ^goal diagnose)
+    (fact ^value << y >>)
+    -->
+    (modify 2 ^value yes))
+
+;;; make-no-answer: Force a no answer to be 'no'
+
+(p make-no-answer
+    (task ^goal diagnose)
+    (fact ^value << n >>)
+    -->
+    (modify 2 ^value no))
+
+;;; force-yes-or-no: Wipe out bad answers
+
+(p force-yes-answer
+    (task ^goal diagnose)
+    (fact ^value {<> nil <> yes <> y <> no <> n <> q <> quit})
+    -->
+    (write (crlf) "Please answer yes or no")
+    (modify 2 ^value nil))
+
+;;; quit: Quit
+
+(p quit
+    (task ^goal diagnose)
+    (fact ^value << q quit >>)
+    -->
+    (halt))
+
+(p key-is-off
+    (task ^goal diagnose)
+    (fact ^name |key is off| ^value yes)
+    -->
+    (bind <x> |you must turn the key to start the car|)
+    (make fact ^name <x> ^value yes)
+    (write (crlf) "Concluding" <x> (crlf))
+    (modify 1 ^goal clean))
+
+(p ignition-or-fuel
+    (task ^goal diagnose)
+    (fact ^name |key is off| ^value no)
+    (fact ^name |engine is turning| ^value yes)
+    -->
+    (bind <x> |problem is in fuel or ignition system|)
+    (make fact ^name <x> ^value yes)
+    (write (crlf) "Concluding" <x> (crlf)))
+
+(p bad-starting-system
+    (task ^goal diagnose)
+    (fact ^name |key is off| ^value no)
+    (fact ^name |engine is turning| ^value no)
+    -->
+    (bind <x> |problem is in starting system|)
+    (make fact ^name <x> ^value yes)
+    (write (crlf) "Concluding" <x> (crlf)))
+
+(p out-of-gas
+    (task ^goal diagnose)
+    (fact ^name |fuel gauge shows empty| ^value yes)
+    -->
+    (bind <x> |out of gas|)
+    (make fact ^name <x> ^value yes)
+    (write (crlf) "Concluding" <x> (crlf))
+    (modify 1 ^goal clean))
+
+(p engine-flooded
+    (task ^goal diagnose)
+    (fact ^name |problem is in fuel or ignition system| ^value yes)
+    (fact ^name |carburetor smells like gasoline| ^value yes)
+    (fact ^name |spark at spark plugs| ^value yes)
+    -->
+    (bind <x> |engine is flooded: wait 15 minutes|)
+    (make fact ^name <x> ^value yes)
+    (write (crlf) "Concluding" <x> (crlf))
+    (modify 1 ^goal clean))
+
+(p bad-ignition
+    (task ^goal diagnose)
+    (fact ^name |problem is in fuel or ignition system| ^value yes)
+    (fact ^name |headlights are dim or dead| ^value no)
+    (fact ^name |spark at spark plugs| ^value no)
+    -->
+    (bind <x> |you have a bad ignition system|)
+    (make fact ^name <x> ^value yes)
+    (write (crlf) "Concluding" <x> (crlf))
+    (modify 1 ^goal clean))
+
+(p bad-battery
+    (task ^goal diagnose)
+    (fact ^name |headlights are dim or dead| ^value yes)
+    -->
+    (bind <x> |you have a dead battery|)
+    (make fact ^name <x> ^value yes)
+    (write (crlf) "Concluding" <x> (crlf))
+    (modify 1 ^goal clean))
+
+(p bad-starter
+    (task ^goal diagnose)
+    (fact ^name |problem is in starting system| ^value yes)
+    (fact ^name |headlights are dim or dead| ^value no)
+    -->
+    (bind <x> |you have a bad starter|)
+    (make fact ^name <x> ^value yes)
+    (write (crlf) "Concluding" <x> (crlf))
+    (modify 1 ^goal clean))
+
+(p bad-fuel-pump
+    (task ^goal diagnose)
+    (fact ^name |problem is in fuel or ignition system| ^value yes)
+    (fact ^name |carburetor smells like gasoline| ^value no)
+    (fact ^name |fuel gauge shows empty| ^value no)
+    -->
+    (bind <x> |problem in fuel system: bad fuel pump or filter|)
+    (make fact ^name <x> ^value yes)
+    (write (crlf) "Concluding" <x> (crlf))
+    (modify 1 ^goal clean))
+
+(p clean-up-old-fact
+    (task ^goal clean)
+    (fact)
+    -->
+    (Remove 2))
+
+(p done-cleaning
+    (task ^goal clean)
+   -(fact)
+    -->
+    (modify 1 ^goal start)
+    (write "*End of diagnosis*" (crlf) (crlf)))

@@ -1,0 +1,132 @@
+;;; ****************************************************************
+;;; VPS2 -- Interpreter for OPS5 ***********************************
+;;; ****************************************************************
+;;;
+;;; Ops5 is a programming language for production systems.
+;;;
+;;; This Common Lisp version of OPS5 is in the public domain.  It is based
+;;; in part on based on a Franz Lisp implementation done by Charles L. Forgy
+;;; at Carnegie-Mellon University, which was placed in the public domain by
+;;; the author in accordance with CMU policies.  Ported to Common Lisp by 
+;;; George Wood and Jim Kowalski. CMU Common Lisp modifications by
+;;; Dario Guise, Skef Wholey, Michael Parzen, and Dan Kuokka. 
+;;; Modified to work in CLtL1, CLtL2 and X3J13 compatible lisps by 
+;;; Mark Kantrowitz on 14-OCT-92. The auto.ops and reactor.ops demo files
+;;; were provided by Michael Mauldin.
+;;; 
+;;; This code is made available is, and without warranty of any kind by the
+;;; authors or by Carnegie-Mellon University.
+;;;
+;;; This code has been tested in Allegro v4.1, Lucid v4.1, IBCL, and
+;;; CMU CL.
+;;;
+;;; Source code:
+;;;    ops.lisp, ops-globals.lisp, ops-backup.lisp, ops-compile.lisp, 
+;;;    ops-init.lisp, ops-io.lisp, ops-main.lisp, ops-match.lisp, 
+;;;    ops-rhs.lisp, ops-util.lisp
+;;;
+;;; Demo Files: 
+;;;    ops-demo-mab.lisp and ops-demo-ttt.lisp
+;;;    auto.ops and reactor.ops
+;;;
+;;; Documentation for OPS may be found in the OPS5 User's Manual, July 1981,
+;;; by Forgy, CMU CSD.
+;;;
+;;; This version of OPS5 was obtained by anonymous ftp from 
+;;;    ftp.cs.cmu.edu:/user/ai/areas/expert/systems/ops5/ops5_cl.tgz
+
+;;; ********************************
+;;; Usage **************************
+;;; ********************************
+;;;
+;;; Before loading:
+;;;    Change the global variable *ops-code-directory* to refer to the
+;;;    directory where the OPS5 sources are kept. You may also need to
+;;;    change the definition of OPS-PATHNAME depending on your lisp.
+;;;
+;;; 
+;;; To use:
+;;;    1. From Lisp, load the file "ops":
+;;;          (load "ops")
+;;;    2. Go into the OPS package:
+;;;          (in-package "OPS")
+;;;    3. To compile the OPS sources, use compile-ops:
+;;;          (compile-ops)
+;;;    4. To load the OPS sources, use load-ops:
+;;;          (load-ops)
+;;; Now you can load your OPS5 code or start typing in productions.
+;;; If you want to load in a new set of productions, call (reset-ops)
+;;; between rule sets. For a nice REP Loop, run (ops).
+;;;
+;;; Demos:
+;;;
+;;; There are two demos
+;;;    interactive tic-tac-toe 
+;;;    the monkey and banana problem
+;;; To run the former, just load it and call (run). For the latter,
+;;; load it, enter (make start 1) and then call (run).
+
+;;; ********************************
+;;; Known Bugs *********************
+;;; ********************************
+;;;
+;;; Loading new rule-sets clobbers the state of the interpreter. To use
+;;; a new rule-set, exit lisp and restart OPS.
+;;;
+;;; Although this implementation has been put into its own package, only
+;;; a few interfaces have been exported. You must run in the OPS package.
+
+;;; ********************************
+;;; Sample Run *********************
+;;; ********************************
+> (load "ops")
+;;; Loading binary file "ops.hbin"
+#P"/afs/andrew.cmu.edu/scs/cs/15-381/ops5v1/ops.hbin"
+> (in-package "OPS")
+#<Package "OPS" 40242A7E>
+> (load-ops)
+;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-globals.hbin"
+;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-util.hbin"
+;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-backup.hbin"
+;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-compile.hbin"
+;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-main.hbin"
+;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-match.hbin"
+;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-io.hbin"
+;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-rhs.hbin"
+NIL
+> (load "../ops/auto.ops")
+;;; Loading source file "../ops/auto.ops"
+;;; Warning: File "../ops/auto.ops" does not begin with IN-PACKAGE.  Loading into package "OPS"
+******************
+#P"/afs/andrew.cmu.edu/scs/cs/15-381/ops/auto.ops"
+> (make ready)
+NIL
+> (run)
+
+
+Automobile Diagnosis 
+
+
+Is this true: key is off [no]  y
+
+Concluding you must turn the key to start the car 
+*End of diagnosis* 
+
+
+Is this true: key is off [no]  
+
+Is this true: engine is turning [no]  yes
+
+Concluding problem is in fuel or ignition system 
+
+Is this true: headlights are dim or dead [no]  q
+
+end -- explicit halt
+ 18 productions (108 // 200 nodes)
+ 19 firings (42 rhs actions)
+  5 mean working memory size (8 maximum)
+  4 mean conflict set size (7 maximum)
+ 10 mean token memory size (17 maximum)
+NIL
+> 
+;;; *EOF*
