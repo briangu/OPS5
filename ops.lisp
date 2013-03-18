@@ -43,18 +43,18 @@
 ;;; Source Directory ***************
 ;;; ********************************
 
-(defparameter *ops-code-directory* ""
+(defparameter *ops-code-directory* *load-pathname*
   "Directory where OPS5 source code is stored.")
 
 (defun ops-pathname (filename)
-  (concatenate 'string *ops-code-directory* filename))
+  (make-pathname :name filename :type nil :defaults *ops-code-directory*))
 
 (defun load-ops-file (filename)
   (load (ops-pathname filename)))
 
 (defun compile-load (filename)
   (let ((pname (ops-pathname filename)))
-    (compile-file (concatenate 'string pname ".lisp"))
+    (compile-file (make-pathname :type "lisp" :defaults pname))
     (load pname)))
 
 ;;; ********************************
