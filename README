@@ -38,12 +38,6 @@
 ;;; ********************************
 ;;; Usage **************************
 ;;; ********************************
-;;;
-;;; Before loading:
-;;;    Change the global variable *ops-code-directory* to refer to the
-;;;    directory where the OPS5 sources are kept. You may also need to
-;;;    change the definition of OPS-PATHNAME depending on your lisp.
-;;;
 ;;; 
 ;;; To use:
 ;;;    1. From Lisp, load the file "ops":
