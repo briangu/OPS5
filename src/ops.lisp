@@ -43,8 +43,9 @@
 ;;; Source Directory ***************
 ;;; ********************************
 
-(defparameter *ops-code-directory* *load-pathname*
-  "Directory where OPS5 source code is stored.")
+(defparameter *ops-code-directory* #.(or *compile-file-pathname*
+                                         *load-pathname*)
+              "Directory where OPS5 source code is stored.")
 
 (defun ops-pathname (filename)
   (make-pathname :name filename :type nil :defaults *ops-code-directory*))
