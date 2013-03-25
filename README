@@ -68,29 +68,25 @@
 ;;; ********************************
 ;;; Sample Run *********************
 ;;; ********************************
-> (load "ops")
-;;; Loading binary file "ops.hbin"
-#P"/afs/andrew.cmu.edu/scs/cs/15-381/ops5v1/ops.hbin"
-> (in-package "OPS")
-#<Package "OPS" 40242A7E>
-> (load-ops)
-;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-globals.hbin"
-;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-util.hbin"
-;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-backup.hbin"
-;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-compile.hbin"
-;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-main.hbin"
-;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-match.hbin"
-;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-io.hbin"
-;;; Loading binary file "/afs/andrew.cmu.edu/scs/cs/15-381/ops5/ops-rhs.hbin"
-NIL
-> (load "../ops/auto.ops")
-;;; Loading source file "../ops/auto.ops"
-;;; Warning: File "../ops/auto.ops" does not begin with IN-PACKAGE.  Loading into package "OPS"
+CL-USER> (ql:quickload "ops5")
+To load "ops5":
+  Load 1 ASDF system:
+    ops5
+; Loading "ops5"
+.........................
+("ops5")
+CL-USER> (in-package "OPS")
+#<Package "OPS">
+OPS> (load (merge-pathnames "../demo/auto.ops" *ops-code-directory*))
+Resetting OPS5 interpreter: 
+             
+   deleting productions, working memory, etc.
+Common Lisp OPS5 interpreter, version 19-OCT-92.
 ******************
-#P"/afs/andrew.cmu.edu/scs/cs/15-381/ops/auto.ops"
-> (make ready)
+#P"/home/nakrakiiya/quicklisp/local-projects/ops5/demo/auto.ops"
+OPS> (make ready)
 NIL
-> (run)
+OPS> (run)
 
 
 Automobile Diagnosis 
@@ -117,5 +113,5 @@ end -- explicit halt
   4 mean conflict set size (7 maximum)
  10 mean token memory size (17 maximum)
 NIL
-> 
+OPS> 
 ;;; *EOF*
