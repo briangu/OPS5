@@ -47,45 +47,6 @@
                                          *load-pathname*)
               "Directory where OPS5 source code is stored.")
 
-(defun ops-pathname (filename)
-  (make-pathname :name filename :type nil :defaults *ops-code-directory*))
-
-(defun load-ops-file (filename)
-  (load (ops-pathname filename)))
-
-(defun compile-load (filename)
-  (let ((pname (ops-pathname filename)))
-    (compile-file (make-pathname :type "lisp" :defaults pname))
-    (load pname)))
-
-;;; ********************************
-;;; OPS Loading, Compilation, Init *
-;;; ********************************
-
-(defun load-ops ()
-  (load-ops-file "ops-globals")
-  (load-ops-file "ops-util")
-  (load-ops-file "ops-backup")
-  (load-ops-file "ops-compile")
-  (load-ops-file "ops-main")
-  (load-ops-file "ops-match")
-  (load-ops-file "ops-io")
-  (load-ops-file "ops-rhs")
-  (load-ops-file "ops-init")
-  (ops-init))
-
-(defun compile-ops ()
-  (load-ops-file "ops")			; so that shadowing takes place...
-  (compile-load "ops-globals")
-  (compile-load "ops-util")		; macros
-  (compile-load "ops-compile")
-  (compile-load "ops-rhs")		; defines macros used in ops-init
-  (compile-load "ops-main")		; macros
-  (compile-load "ops-match") 
-  (compile-load "ops-backup")
-  (compile-load "ops-io")
-  (compile-load "ops-init"))
-
 ;;; ********************************
 ;;; REP Loop ***********************
 ;;; ********************************
