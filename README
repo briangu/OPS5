@@ -17,8 +17,8 @@
 ;;; This code is made available is, and without warranty of any kind by the
 ;;; authors or by Carnegie-Mellon University.
 ;;;
-;;; This code has been tested in Allegro v4.1, Lucid v4.1, IBCL, and
-;;; CMU CL.
+;;; This code has been tested in Clozure CL v1.9, SBCL v1.0.57, CLISP v2.49,
+;;; ECL v12.12.1, ABCL v1.1.1, Lispworks v6.1, and Allegro CL v8.2.
 ;;;
 ;;; Source code:
 ;;;    ops.lisp, ops-globals.lisp, ops-backup.lisp, ops-compile.lisp, 
