@@ -40,14 +40,9 @@
 ;;; ********************************
 ;;; 
 ;;; To use:
-;;;    1. From Lisp, load the file "ops":
-;;;          (load "ops")
-;;;    2. Go into the OPS package:
-;;;          (in-package "OPS")
-;;;    3. To compile the OPS sources, use compile-ops:
-;;;          (compile-ops)
-;;;    4. To load the OPS sources, use load-ops:
-;;;          (load-ops)
+;;;    1. Clone this project and put into the local-projects directory of quicklisp (e.g. "~/quicklisp/local-projects").
+;;;    2. Use quicklisp to load this project:
+;;;          (ql:quickload "ops5")
 ;;; Now you can load your OPS5 code or start typing in productions.
 ;;; If you want to load in a new set of productions, call (reset-ops)
 ;;; between rule sets. For a nice REP Loop, run (ops).
