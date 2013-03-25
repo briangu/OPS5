@@ -18,11 +18,11 @@
 
 ;;; Global variables also used by OPS modules.
 
-(defvar *halt-flag*)
-(defvar *cycle-count*)
-(defvar *p-name*)
-(defvar *ptrace*)
-(defvar *wtrace*)
+(defvar *halt-flag* nil)
+(defvar *cycle-count* nil)
+(defvar *p-name* nil)
+(defvar *ptrace* nil)
+(defvar *wtrace* nil)
 
 ;;; Hash Tables.
 
