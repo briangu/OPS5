@@ -1,0 +1,28 @@
+# see http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
+# default
+* -text
+
+# binaries
+*.png binary
+*.jpg binary
+*.exe binary
+*.dll binary
+*.exe binary
+*.7z  binary
+*.gz  binary
+*.zip binary
+
+
+
+
+# Standard to msysgit
+*.doc	 diff=astextplain
+*.DOC	 diff=astextplain
+*.docx diff=astextplain
+*.DOCX diff=astextplain
+*.dot  diff=astextplain
+*.DOT  diff=astextplain
+*.pdf  diff=astextplain
+*.PDF	 diff=astextplain
+*.rtf	 diff=astextplain
+*.RTF	 diff=astextplain
