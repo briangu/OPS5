@@ -18,7 +18,7 @@
 ;;; authors or by Carnegie-Mellon University.
 ;;;
 ;;; This code has been tested in Clozure CL v1.9, SBCL v1.0.57, CLISP v2.49,
-;;; ECL v12.12.1, ABCL v1.1.1, Lispworks v6.1, and Allegro CL v8.2.
+;;; ECL v12.12.1, ABCL v1.1.1, Lispworks v6.1, MKCL v1.1.3, and Allegro CL v8.2.
 ;;;
 ;;; Source code:
 ;;;    ops.lisp, ops-globals.lisp, ops-backup.lisp, ops-compile.lisp, 
