@@ -12,7 +12,8 @@
 ;;; Dario Guise, Skef Wholey, Michael Parzen, and Dan Kuokka. 
 ;;; Modified to work in CLtL1, CLtL2 and X3J13 compatible lisps by 
 ;;; Mark Kantrowitz on 14-OCT-92. The auto.ops and reactor.ops demo files
-;;; were provided by Michael Mauldin.
+;;; were provided by Michael Mauldin.  In year 2013, ported to modern Common
+;;; Lisp implementations and added support for quicklisp by Xiaofeng Yang.
 ;;; 
 ;;; This code is made available is, and without warranty of any kind by the
 ;;; authors or by Carnegie-Mellon University.
