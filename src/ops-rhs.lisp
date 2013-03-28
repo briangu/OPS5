@@ -24,29 +24,29 @@
 
 ;;; External global variables
 
-(defvar *size-result-array*)
-(defvar *in-rhs*)
-(defvar *current-wm*)
-(defvar *max-wm*)
-(defvar *action-count*)
-(defvar *critical*)
+(defvar *size-result-array* nil)
+(defvar *in-rhs* nil)
+(defvar *current-wm* nil)
+(defvar *max-wm* nil)
+(defvar *action-count* nil)
+(defvar *critical* nil)
 
 
 ;;; Internal global variables
 
-(defvar *wmpart-list*)
-(defvar *wm-filter*)
-(defvar *wm*)
-(defvar *old-wm*)
-(defvar *result-array*)
-(defvar *variable-memory*)
-(defvar *last*)
-(defvar *max-index*)
-(defvar *next-index*)
-(defvar *data-matched*)
-(defvar *ce-variable-memory*)
-(defvar *rest*)
-(defvar *build-trace*)
+(defvar *wmpart-list* nil)
+(defvar *wm-filter* nil)
+(defvar *wm* nil)
+(defvar *old-wm* nil)
+(defvar *result-array* nil)
+(defvar *variable-memory* nil)
+(defvar *last* nil)
+(defvar *max-index* nil)
+(defvar *next-index* nil)
+(defvar *data-matched* nil)
+(defvar *ce-variable-memory* nil)
+(defvar *rest* nil)
+(defvar *build-trace* nil)
 
 
 ;;;; Functions for RHS evaluation

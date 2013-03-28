@@ -24,21 +24,21 @@
 
 ;;; Global variables used in this module only.
 
-(defvar *limit-token*)
-(defvar *total-wm*)
-(defvar *max-token*)
-(defvar *total-token*)
-(defvar *brkpts*)
-(defvar *phase*)
-(defvar *break-flag*)
-(defvar *remaining-cycles*)
-(defvar *conflict-set*)
-(defvar *max-cs*)
-(defvar *total-cs*)
-(defvar *limit-cs*)
-(defvar *strategy*)
-(defvar *class-list*)
-(defvar *buckets*)
+(defvar *limit-token* nil)
+(defvar *total-wm* nil)
+(defvar *max-token* nil)
+(defvar *total-token* nil)
+(defvar *brkpts* nil)
+(defvar *phase* nil)
+(defvar *break-flag* nil)
+(defvar *remaining-cycles* nil)
+(defvar *conflict-set* nil)
+(defvar *max-cs* nil)
+(defvar *total-cs* nil)
+(defvar *limit-cs* nil)
+(defvar *strategy* nil)
+(defvar *class-list* nil)
+(defvar *buckets* nil)
 
 
 

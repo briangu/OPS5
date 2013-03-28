@@ -23,17 +23,17 @@
 
 ;;; External global variables
 
-(defvar *current-token*)
+(defvar *current-token* nil)
 
 
 ;;; Internal global variables
 
-(defvar *alpha-data-part*)
-(defvar *alpha-flag-part*)
-(defvar *flag-part*)
-(defvar *data-part*)
-(defvar *sendtocall*)
-(defvar *side*)
+(defvar *alpha-data-part* nil)
+(defvar *alpha-flag-part* nil)
+(defvar *flag-part* nil)
+(defvar *data-part* nil)
+(defvar *sendtocall* nil)
+(defvar *side* nil)
 (proclaim '(special *c1* *c2* *c3* *c4* *c5* *c6* *c7* *c8* *c9*
 	   *c10* *c11* *c12* *c13* *c14* *c15* *c16* *c17* *c18* *c19*
 	   *c20* *c21* *c22* *c23* *c24* *c25* *c26* *c27* *c28* *c29*

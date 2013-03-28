@@ -22,11 +22,11 @@
 
 ;;; Internal global variables.
 
-(defvar *write-file*)
-(defvar *trace-file*)
-(defvar *accept-file*)
-(defvar *ppline*)
-(defvar *filters*)
+(defvar *write-file* nil)
+(defvar *trace-file* nil)
+(defvar *accept-file* nil)
+(defvar *ppline* nil)
+(defvar *filters* nil)
 
 
 

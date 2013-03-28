@@ -44,7 +44,7 @@
   "Clears the state of OPS to allow a new rule set to be loaded."
 
   ;; Tell the user what we're doing.
-  (format t "~&Resetting OPS5 interpreter: ~
+  (format t "~&Resetting OPS5 interpreter: 
              ~&   deleting productions, working memory, etc.")
   (remove *)
   (ops-init)

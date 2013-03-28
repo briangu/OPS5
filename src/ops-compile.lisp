@@ -23,27 +23,27 @@
 
 ;;; External global variables
 
-(defvar *real-cnt*)
-(defvar *virtual-cnt*)
-(defvar *last-node*)
-(defvar *first-node*)
-(defvar *pcount*)
+(defvar *real-cnt* nil)
+(defvar *virtual-cnt* nil)
+(defvar *last-node* nil)
+(defvar *first-node* nil)
+(defvar *pcount* nil)
 
 
 ;;; Internal global variables
 
-(defvar *matrix*)
-(defvar *curcond*)
-(defvar *feature-count*)
-(defvar *ce-count*)
-(defvar *vars*)
-(defvar *ce-vars*)
-(defvar *rhs-bound-vars*)
-(defvar *rhs-bound-ce-vars*)
-(defvar *last-branch*)
-(defvar *subnum*)
-(defvar *cur-vars*)
-(defvar *action-type*)
+(defvar *matrix* nil)
+(defvar *curcond* nil)
+(defvar *feature-count* nil)
+(defvar *ce-count* nil)
+(defvar *vars* nil)
+(defvar *ce-vars* nil)
+(defvar *rhs-bound-vars* nil)
+(defvar *rhs-bound-ce-vars* nil)
+(defvar *last-branch* nil)
+(defvar *subnum* nil)
+(defvar *cur-vars* nil)
+(defvar *action-type* nil)
 
 
 
